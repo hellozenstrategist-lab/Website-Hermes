@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hermes Ops CFO</title>
+  <style>
+    :root { color-scheme: dark; --bg:#080b10; --panel:#101722; --panel2:#151f2d; --line:#26354a; --text:#e8f0ff; --muted:#93a4bd; --green:#31d07f; --red:#ff5c72; --yellow:#ffd166; --blue:#62a8ff; }
+    * { box-sizing: border-box; }
+    body { margin:0; font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif; background: radial-gradient(circle at top left, #18243a 0, #080b10 42%); color:var(--text); }
+    header { padding:32px 28px 18px; border-bottom:1px solid var(--line); background:rgba(8,11,16,.82); position:sticky; top:0; backdrop-filter: blur(12px); z-index:2; }
+    h1 { margin:0; font-size:32px; letter-spacing:-.03em; }
+    .tag { color:var(--muted); margin-top:6px; }
+    main { padding:24px; display:grid; gap:18px; grid-template-columns: 380px 1fr; }
+    .card { background:linear-gradient(180deg,var(--panel),#0c121b); border:1px solid var(--line); border-radius:18px; padding:18px; box-shadow:0 20px 60px rgba(0,0,0,.25); }
+    label { display:block; color:var(--muted); font-size:13px; margin:12px 0 6px; }
+    input, textarea { width:100%; border:1px solid var(--line); background:#070a0f; color:var(--text); border-radius:12px; padding:12px; font:inherit; }
+    textarea { min-height:92px; resize:vertical; }
+    button { border:0; background:linear-gradient(135deg,#4f8cff,#8a5cff); color:white; padding:12px 14px; border-radius:12px; font-weight:700; cursor:pointer; margin-top:12px; width:100%; }
+    button.secondary { background:#172235; color:#d7e4fb; border:1px solid var(--line); }
+    button.approve { width:auto; margin:0; padding:8px 10px; background:linear-gradient(135deg,#18a464,#31d07f); }
+    .grid { display:grid; grid-template-columns: repeat(4, minmax(120px, 1fr)); gap:12px; }
+    .metric { background:var(--panel2); border:1px solid var(--line); border-radius:16px; padding:14px; }
+    .metric .k { color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:.08em; }
+    .metric .v { font-size:26px; font-weight:800; margin-top:6px; }
+    .green { color:var(--green); } .red { color:var(--red); } .yellow { color:var(--yellow); } .blue { color:var(--blue); }
+    table { width:100%; border-collapse:collapse; overflow:hidden; border-radius:14px; }
+    th, td { text-align:left; border-bottom:1px solid var(--line); padding:12px; vertical-align:top; }
+    th { color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:.08em; }
+    .pill { display:inline-block; padding:5px 8px; border-radius:999px; font-size:12px; font-weight:800; background:#1c2a3f; }
+    .APPROVED_AUTO, .APPROVED_HUMAN { color:var(--green); }
+    .BLOCKED_APPROVAL_REQUIRED, .BLOCKED_BUDGET_CAP { color:var(--yellow); }
+    .audit { max-height:320px; overflow:auto; }
+    .audit-item { border-left:3px solid var(--blue); padding:8px 0 8px 12px; margin:6px 0; color:#cfdbef; }
+    .small { color:var(--muted); font-size:13px; }
+    a { color:#8fbaff; }
+    @media (max-width: 980px) { main { grid-template-columns:1fr; } .grid { grid-template-columns: repeat(2,1fr); } }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Hermes Ops CFO</h1>
+    <div class="tag">Earns through Stripe, spends under guardrails, blocks unsafe purchases, writes an audit ledger.</div>
+  </header>
+  <main>
+    <section class="card">
+      <h2>Run business goal</h2>
+      <label>Goal</label>
+      <textarea id="goal">Launch paid AI security review service</textarea>
+      <label>Budget USD</label>
+      <input id="budget" type="number" value="250" min="1">
+      <label>Customer offer USD</label>
+      <input id="offer" type="number" value="499" min="1">
+      <button onclick="runDemo()">Forge Ops Plan</button>
+      <button class="secondary" onclick="resetDemo()">Reset Ledger</button>
+      <p class="small">No Stripe key required. With STRIPE_SECRET_KEY=sk_test_..., the backend creates real Stripe test-mode payment links. Live keys are refused.</p>
+    </section>
+
+    <section class="card">
+      <div class="grid">
+        <div class="metric"><div class="k">Revenue Link</div><div id="revenue" class="v green">—</div></div>
+        <div class="metric"><div class="k">Approved Spend</div><div id="spend" class="v yellow">—</div></div>
+        <div class="metric"><div class="k">Margin</div><div id="margin" class="v green">—</div></div>
+        <div class="metric"><div class="k">Blocked</div><div id="blocked" class="v red">—</div></div>
+      </div>
+      <h2>Spend Gate</h2>
+      <div id="spendTable" class="small">Run the demo.</div>
+      <h2>Ops Checklist</h2>
+      <div id="ops" class="small">—</div>
+      <h2>Audit Trail</h2>
+      <div id="audit" class="audit small">—</div>
+    </section>
+  </main>
+<script>
+async function api(path, body) {
+  const opts = body === undefined ? {} : {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(body)};
+  const res = await fetch(path, opts);
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error || res.statusText);
+  return data;
+}
+function dollars(n) { return '$' + Number(n || 0).toLocaleString(); }
+function render(state) {
+  if (!state || !state.revenue) return;
+  document.getElementById('revenue').innerHTML = `<a href="${state.revenue.payment_link}" target="_blank">${dollars(state.revenue.amount_usd)}</a>`;
+  document.getElementById('spend').textContent = dollars(state.spend.approved_total_usd);
+  document.getElementById('margin').textContent = dollars(state.unit_economics.projected_margin_usd);
+  document.getElementById('blocked').textContent = dollars(state.spend.blocked_total_usd);
+  document.getElementById('spendTable').innerHTML = `<table><thead><tr><th>Item</th><th>Cost</th><th>Status</th><th>Decision</th><th>Action</th></tr></thead><tbody>` +
+    state.spend.items.map(item => `<tr><td><b>${item.name}</b><div class="small">${item.reason}</div></td><td>${dollars(item.amount_usd)}</td><td><span class="pill ${item.status}">${item.status}</span></td><td>${item.decision}</td><td>${item.status.startsWith('BLOCKED') ? `<button class="approve" onclick="approve('${item.name.replaceAll("'", "\\'")}')">Approve</button>` : (item.payment_link ? `<a href="${item.payment_link}" target="_blank">payment link</a>` : '—')}</td></tr>`).join('') + `</tbody></table>`;
+  document.getElementById('ops').innerHTML = state.ops.map(op => `<div>✅ <b>${op.status}</b> — ${op.task}</div>`).join('');
+  document.getElementById('audit').innerHTML = state.audit_trail.slice().reverse().map(e => `<div class="audit-item"><b>${e.type}</b> — ${e.summary}<br><span class="small">${e.at}</span></div>`).join('');
+}
+async function runDemo() {
+  const state = await api('/api/run-demo', {goal:goal.value, budget_usd:Number(budget.value), customer_offer_usd:Number(offer.value)});
+  render(state);
+}
+async function approve(name) {
+  try { render(await api('/api/approve', {name})); } catch (e) { alert(e.message); }
+}
+async function resetDemo() {
+  await api('/api/reset', {});
+  location.reload();
+}
+api('/api/state').then(render).catch(()=>{});
+</script>
+</body>
+</html>

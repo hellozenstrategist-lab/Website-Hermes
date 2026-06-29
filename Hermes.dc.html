@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:#081610}
+body{overflow-x:hidden}
+::selection{background:#cfe9d2;color:#081610}
+img{-webkit-user-drag:none;user-select:none}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-16px)}}
+@keyframes floaty2{0%,100%{transform:translateY(0)}50%{transform:translateY(20px)}}
+@keyframes grainshift{0%{transform:translate(0,0)}10%{transform:translate(-4%,-6%)}20%{transform:translate(-9%,4%)}30%{transform:translate(5%,-9%)}40%{transform:translate(-6%,12%)}50%{transform:translate(-11%,5%)}60%{transform:translate(13%,0)}70%{transform:translate(2%,9%)}80%{transform:translate(-13%,1%)}90%{transform:translate(9%,4%)}100%{transform:translate(0,0)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+@keyframes breathe{0%,100%{opacity:.42}50%{opacity:.74}}
+@keyframes flick{0%,100%{opacity:.5}50%{opacity:.95}}
+</style>
+</helmet>
+<div ref="{{ setRoot }}" style="position:relative;min-height:100vh;background:radial-gradient(125% 95% at 50% -12%, #143020 0%, #0b1d14 42%, #081610 100%);color:#e9ecd9;font-family:'EB Garamond',Georgia,serif;font-size:18px;line-height:1.6;overflow:hidden">
+
+  <div ref="{{ setGrain }}" style="position:fixed;inset:-50%;width:200%;height:200%;pointer-events:none;z-index:70;mix-blend-mode:soft-light;opacity:.18;background-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E&quot;);background-size:140px 140px;animation:grainshift 7s steps(9) infinite"></div>
+  <div style="position:fixed;inset:0;pointer-events:none;z-index:65;background:radial-gradient(110% 80% at 50% 30%, transparent 40%, rgba(4,12,8,.55) 100%)"></div>
+
+  <!-- NAV -->
+  <nav style="position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:22px clamp(20px,5vw,64px);backdrop-filter:blur(6px);background:linear-gradient(180deg,rgba(8,22,16,.6),transparent)">
+    <button onClick="{{ goHome }}" style="background:none;border:none;cursor:pointer;color:#e9ecd9;display:flex;align-items:baseline;gap:11px;padding:0;font-family:'Cormorant Garamond',serif">
+      <span style="font-size:25px;font-weight:500;letter-spacing:.16em">HERMES</span>
+      <span style="font:500 10px/1 'IBM Plex Mono',monospace;letter-spacing:.34em;color:#7ba886;text-transform:uppercase">Ops·CFO</span>
+    </button>
+    <div style="display:flex;align-items:center;gap:clamp(18px,3vw,38px)">
+      <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="3">
+        <button onClick="{{ n.onClick }}" style="{{ n.style }}">{{ n.label }}</button>
+      </sc-for>
+    </div>
+  </nav>
+
+  <!-- ============ HOME ============ -->
+  <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+  <div>
+    <!-- HERO -->
+    <section style="position:relative;min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:120px clamp(20px,5vw,64px) 70px;overflow:hidden">
+      <div data-parallax data-depth="0.14" style="position:absolute;inset:-12% -2% 0 -2%;z-index:0;opacity:.6;-webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,.95),transparent 94%);mask-image:linear-gradient(180deg,rgba(0,0,0,.95),transparent 94%)">
+        <div style="position:absolute;inset:0;display:flex">
+          <div style="flex:1;position:relative;overflow:hidden">
+            <div data-ghost-stack style="position:absolute;inset:0">
+              <img data-ghost-frame src="assets/ghost/frame01.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center bottom;opacity:1">
+              <img data-ghost-frame src="assets/ghost/frame02.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center bottom;opacity:0">
+              <img data-ghost-frame src="assets/ghost/frame03.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center bottom;opacity:0">
+              <img data-ghost-frame src="assets/ghost/frame04.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center bottom;opacity:0">
+              <img data-ghost-frame src="assets/ghost/frame05.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center bottom;opacity:0">
+              <img data-ghost-frame src="assets/ghost/frame06.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center bottom;opacity:0">
+              <img data-ghost-frame src="assets/ghost/frame07.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center bottom;opacity:0">
+              <img data-ghost-frame src="assets/ghost/frame08.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center bottom;opacity:0">
+              <img data-ghost-frame src="assets/ghost/frame09.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center bottom;opacity:0">
+              <img data-ghost-frame src="assets/ghost/frame10.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center bottom;opacity:0">
+            </div>
+          </div>
+          <div style="flex:1;position:relative;overflow:hidden;transform:scaleX(-1)">
+            <div data-ghost-stack style="position:absolute;inset:0">
+              <img data-ghost-frame src="assets/ghost/frame06.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center bottom;opacity:1">
+              <img data-ghost-frame src="assets/ghost/frame07.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center bottom;opacity:0">
+              <img data-ghost-frame src="assets/ghost/frame08.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center bottom;opacity:0">
+              <img data-ghost-frame src="assets/ghost/frame09.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center bottom;opacity:0">
+              <img data-ghost-frame src="assets/ghost/frame10.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center bottom;opacity:0">
+              <img data-ghost-frame src="assets/ghost/frame01.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center bottom;opacity:0">
+              <img data-ghost-frame src="assets/ghost/frame02.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center bottom;opacity:0">
+              <img data-ghost-frame src="assets/ghost/frame03.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center bottom;opacity:0">
+              <img data-ghost-frame src="assets/ghost/frame04.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center bottom;opacity:0">
+              <img data-ghost-frame src="assets/ghost/frame05.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center bottom;opacity:0">
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- floating head motif -->
+      <div data-drift="26" style="position:absolute;inset:0;margin:auto;z-index:2;width:clamp(240px,30vw,420px);aspect-ratio:307/381;filter:drop-shadow(0 30px 60px rgba(0,0,0,.55))">
+        <div data-head-stack style="position:absolute;inset:0;animation:floaty 9s ease-in-out infinite">
+          <img data-head-frame src="assets/head/frame01.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:1">
+          <img data-head-frame src="assets/head/frame02.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0">
+          <img data-head-frame src="assets/head/frame03.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0">
+          <img data-head-frame src="assets/head/frame04.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0">
+          <img data-head-frame src="assets/head/frame05.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0">
+          <img data-head-frame src="assets/head/frame06.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0">
+          <img data-head-frame src="assets/head/frame07.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0">
+          <img data-head-frame src="assets/head/frame08.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0">
+          <img data-head-frame src="assets/head/frame09.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0">
+          <img data-head-frame src="assets/head/frame10.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0">
+        </div>
+        <img src="assets/speech-bubble.png" alt="Downwards my friend!" style="position:absolute;top:-13%;left:67%;width:122%;height:auto;z-index:3;filter:drop-shadow(0 12px 26px rgba(0,0,0,.5));animation:floaty2 7s ease-in-out infinite;pointer-events:none">
+      </div>
+
+    </section>
+
+    <!-- FOUR FACULTIES -->
+    <section style="position:relative;z-index:3;padding:clamp(70px,9vw,130px) clamp(20px,5vw,64px);border-top:1px solid rgba(207,233,210,.12)">
+      <div style="display:flex;align-items:baseline;gap:18px;margin-bottom:54px;flex-wrap:wrap">
+        <span style="font:500 12px/1 'IBM Plex Mono',monospace;letter-spacing:.3em;color:#7ba886;text-transform:uppercase">§ I</span>
+        <h2 style="font-family:'Cormorant Garamond',serif;font-weight:400;font-size:clamp(32px,5vw,58px);margin:0;letter-spacing:-.01em">Four faculties</h2>
+      </div>
+      <div style="display:flex;gap:clamp(28px,4vw,64px);align-items:center;flex-wrap:wrap">
+        <div style="flex:0 0 clamp(260px,30vw,420px);position:relative;align-self:center">
+          <img src="assets/bubble-painting.png" alt="AHH im a painting now." style="position:absolute;top:-11%;right:-6%;width:84%;height:auto;z-index:4;filter:drop-shadow(0 12px 26px rgba(0,0,0,.5));animation:floaty2 6.5s ease-in-out infinite;pointer-events:none">
+          <img src="assets/framed-head.png" alt="Framed portrait of the agent" style="width:100%;height:auto;display:block;filter:drop-shadow(0 34px 64px rgba(0,0,0,.55))">
+        </div>
+        <div style="flex:1;min-width:280px;position:relative">
+          <img src="assets/faculties.png" alt="01 Earn — drafts the offer and mints a $499 Stripe payment link. 02 Spend — plans its own vendor spend. 03 Govern — refuses spend above the auto-approval cap. 04 Audit — writes every revenue, spend, and refusal to ledger.json." style="display:block;width:100%;height:auto;filter:{{ cardsFilter }};opacity:{{ cardsOpacity }};transition:filter .7s ease,opacity .7s ease">
+          <sc-if value="{{ showClickMe }}" hint-placeholder-val="{{ true }}">
+          <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:5">
+            <button onClick="{{ revealFac }}" style="cursor:pointer;background:none;border:none;padding:0;animation:flick 2.6s ease-in-out infinite;filter:drop-shadow(0 10px 22px rgba(0,0,0,.55));transition:transform .25s ease" style-hover="transform:scale(1.05)">
+              <img src="assets/clickme.png" alt="Click me" style="display:block;width:clamp(150px,16vw,208px);height:auto">
+            </button>
+          </div>
+          </sc-if>
+        </div>
+        <div style="flex:0 0 clamp(156px,16vw,224px);position:relative;align-self:center;opacity:{{ dudeOpacity }};transition:opacity .9s ease">
+          <div style="position:absolute;top:-40%;left:50%;transform:translateX(-50%);width:150%;z-index:4;pointer-events:none">
+            <img src="assets/bubble-faculties.png" alt="Earn, Spend, Govern, Audit." style="width:100%;height:auto;display:block;filter:drop-shadow(0 12px 26px rgba(0,0,0,.5));animation:floaty2 7s ease-in-out infinite">
+          </div>
+          <div data-dude-stack style="position:relative;width:100%;aspect-ratio:259/462;animation:floaty 8s ease-in-out infinite;filter:drop-shadow(0 24px 44px rgba(0,0,0,.5))">
+            <img data-dude-frame src="assets/dude/frame01.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:1">
+            <img data-dude-frame src="assets/dude/frame02.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0">
+            <img data-dude-frame src="assets/dude/frame03.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0">
+            <img data-dude-frame src="assets/dude/frame04.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0">
+            <img data-dude-frame src="assets/dude/frame05.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0">
+            <img data-dude-frame src="assets/dude/frame06.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0">
+            <img data-dude-frame src="assets/dude/frame07.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0">
+            <img data-dude-frame src="assets/dude/frame08.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0">
+            <img data-dude-frame src="assets/dude/frame09.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0">
+            <img data-dude-frame src="assets/dude/frame10.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DEMO STORY -->
+    <section style="position:relative;z-index:3;padding:0">
+      <sc-if value="{{ showStoryBtn }}" hint-placeholder-val="{{ true }}">
+      <div style="display:flex;justify-content:center;padding:clamp(60px,8vw,110px) clamp(20px,5vw,64px)">
+        <button onClick="{{ revealStory }}" style="cursor:pointer;background:none;border:none;padding:0;transition:transform .3s ease" style-hover="transform:scale(1.03)">
+          <div style="animation:floaty 7s ease-in-out infinite;filter:drop-shadow(0 34px 64px rgba(0,0,0,.55))">
+            <img src="assets/story-frame.png" alt="Click me" style="display:block;width:clamp(300px,42vw,520px);height:auto">
+          </div>
+        </button>
+      </div>
+      </sc-if>
+      <sc-if value="{{ storyReveal }}" hint-placeholder-val="{{ false }}">
+      <img src="assets/story.png" alt="§ II — a single run. One goal. Three minutes. A company that pays for itself. Launch a paid AI security review service, budget $250. $499 revenue link minted; $42 spend auto-cleared; $200 held for approval; $457 projected margin." style="display:block;width:100%;height:auto;animation:fadeUp .7s ease both">
+      </sc-if>
+    </section>
+
+    <!-- SPECIMEN BAND -->
+    <section style="position:relative;z-index:3;height:clamp(360px,52vw,520px);overflow:hidden;display:flex;align-items:center;justify-content:center;border-top:1px solid rgba(207,233,210,.12);border-bottom:1px solid rgba(207,233,210,.12)">
+      <div data-parallax data-depth="0.1" style="position:absolute;inset:-15% 0;z-index:0">
+        <img src="assets/face-scream.jpg" alt="" style="width:100%;height:130%;object-fit:cover;opacity:.62">
+      </div>
+      <div style="position:absolute;inset:0;z-index:1;background:radial-gradient(70% 100% at 50% 50%, transparent, rgba(8,22,16,.7))"></div>
+      <img src="assets/gate-quote.png" alt="No request wanders through the gate alone. The agent marks it, keeps watch, and waits for your nod." style="position:relative;z-index:2;height:clamp(280px,44vw,448px);width:auto;max-width:88%;object-fit:contain;filter:drop-shadow(0 22px 50px rgba(0,0,0,.55))">
+    </section>
+
+    <!-- CTA -->
+    <section style="position:relative;z-index:3;padding:clamp(70px,10vw,140px) clamp(20px,5vw,64px);text-align:center">
+      <img src="assets/see-books.png" alt="See the books for yourself." style="display:block;margin:0 auto 34px;width:clamp(280px,46vw,560px);height:auto">
+      <button onClick="{{ goLedger }}" style="cursor:pointer;background:none;border:none;padding:0;transition:transform .3s ease;filter:drop-shadow(0 12px 26px rgba(0,0,0,.5))" style-hover="transform:scale(1.05)">
+        <img src="assets/open-ledger.png" alt="Open the ledger" style="display:block;width:clamp(220px,28vw,330px);height:auto">
+      </button>
+      <div style="margin-top:26px">
+        <a href="https://github.com/hellozenstrategist-lab/Website-Hermes" target="_blank" rel="noopener noreferrer" aria-label="View the project on GitHub" style="display:inline-block;transition:transform .3s ease;filter:drop-shadow(0 12px 26px rgba(0,0,0,.5))" style-hover="transform:scale(1.05)">
+          <img src="assets/github.png" alt="GitHub" style="display:block;width:clamp(140px,17vw,200px);height:auto">
+        </a>
+      </div>
+    </section>
+  </div>
+  </sc-if>
+
+  <!-- ============ LEDGER ============ -->
+  <sc-if value="{{ isLedger }}" hint-placeholder-val="{{ false }}">
+  <div style="position:relative;z-index:3;padding:140px clamp(20px,5vw,64px) 110px;max-width:1080px;margin:0 auto">
+    <div style="position:relative;margin-bottom:34px">
+      <img src="assets/ledger-intro.png" alt="The Ledger, live. Every dollar, written down as it happens. Give Hermes a goal and a budget; watch it earn, spend, and refuse in test mode with no live keys touched. Goal: launch paid AI security review service. Budget $250. Auto-approve cap $50." style="display:block;width:100%;height:auto">
+      <sc-if value="{{ showRunBtn }}" hint-placeholder-val="{{ true }}">
+        <button onClick="{{ runDemo }}" aria-label="Forge ops plan" title="Forge ops plan" style="position:absolute;left:50%;bottom:1%;transform:translateX(-50%);width:24%;height:10%;background:transparent;border:none;border-radius:8px;cursor:pointer"></button>
+      </sc-if>
+      <sc-if value="{{ running }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;left:50%;bottom:-30px;transform:translateX(-50%);font:400 12px/1 'IBM Plex Mono',monospace;letter-spacing:.14em;color:rgba(233,236,217,.5);white-space:nowrap">planning · pricing · gating spend</div>
+      </sc-if>
+    </div>
+
+        <!-- RESULT -->
+        <sc-if value="{{ hasPlan }}" hint-placeholder-val="{{ false }}">
+        <div style="animation:fadeUp .6s ease both">
+          <!-- revenue -->
+          <div style="border:1px solid rgba(207,233,210,.32);background:rgba(207,233,210,.06);border-radius:3px;padding:24px 26px;margin-bottom:30px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px">
+            <div>
+              <div style="font:500 11px/1 'IBM Plex Mono',monospace;letter-spacing:.2em;color:#cfe9d2;text-transform:uppercase;margin-bottom:10px">Revenue · customer payment link</div>
+              <div style="font-family:'Cormorant Garamond',serif;font-size:28px;color:#e9ecd9">AI Security Review</div>
+              <div style="font:400 13px/1 'IBM Plex Mono',monospace;color:rgba(233,236,217,.5);margin-top:8px">stripe.test/pay/ai-security-review-499</div>
+            </div>
+            <div style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:56px;line-height:.9;color:#cfe9d2">$499</div>
+          </div>
+
+          <!-- spend -->
+          <div style="font:500 11px/1 'IBM Plex Mono',monospace;letter-spacing:.2em;color:#7ba886;text-transform:uppercase;margin:0 0 16px">Vendor spend plan</div>
+          <div style="display:flex;flex-direction:column;gap:1px;background:rgba(207,233,210,.1);border:1px solid rgba(207,233,210,.1);margin-bottom:32px">
+            <sc-for list="{{ items }}" as="item" hint-placeholder-count="3">
+              <div style="background:#0b1d14;padding:20px 24px;display:flex;align-items:center;gap:18px;flex-wrap:wrap">
+                <span style="{{ item.dotStyle }}"></span>
+                <div style="flex:1;min-width:180px">
+                  <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap">
+                    <span style="font-size:19px;color:#e9ecd9">{{ item.name }}</span>
+                    <span style="font:400 11px/1 'IBM Plex Mono',monospace;letter-spacing:.1em;color:rgba(233,236,217,.4);text-transform:uppercase">{{ item.cat }}</span>
+                  </div>
+                  <div style="font-size:15px;color:rgba(233,236,217,.55);margin-top:5px">{{ item.reason }}</div>
+                </div>
+                <span style="font:500 19px/1 'IBM Plex Mono',monospace;color:#e9ecd9;min-width:54px;text-align:right">{{ item.amtStr }}</span>
+                <span style="{{ item.badgeStyle }}">{{ item.statusLabel }}</span>
+                <sc-if value="{{ item.showApprove }}" hint-placeholder-val="{{ false }}">
+                  <button onClick="{{ item.onApprove }}" style="cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase;padding:8px 16px;border-radius:2px;border:1px solid #d9b483;background:transparent;color:#d9b483" style-hover="background:#d9b483;color:#081610">Approve</button>
+                </sc-if>
+              </div>
+            </sc-for>
+          </div>
+
+          <!-- unit economics -->
+          <div style="font:500 11px/1 'IBM Plex Mono',monospace;letter-spacing:.2em;color:#7ba886;text-transform:uppercase;margin:0 0 16px">Unit economics</div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1px;background:rgba(207,233,210,.1);border:1px solid rgba(207,233,210,.1);margin-bottom:32px">
+            <sc-for list="{{ econ }}" as="e" hint-placeholder-count="5">
+              <div style="background:#0b1d14;padding:22px 20px">
+                <div style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:38px;line-height:.9;color:{{ e.color }}">{{ e.value }}</div>
+                <div style="font:400 11px/1.3 'IBM Plex Mono',monospace;letter-spacing:.1em;color:rgba(233,236,217,.5);text-transform:uppercase;margin-top:9px">{{ e.label }}</div>
+              </div>
+            </sc-for>
+          </div>
+
+          <!-- audit -->
+          <div style="font:500 11px/1 'IBM Plex Mono',monospace;letter-spacing:.2em;color:#7ba886;text-transform:uppercase;margin:0 0 18px">Audit trail</div>
+          <div style="display:flex;flex-direction:column;gap:0;border-left:1px solid rgba(207,233,210,.2);padding-left:0;margin-bottom:14px">
+            <sc-for list="{{ audit }}" as="a" hint-placeholder-count="4">
+              <div style="display:flex;align-items:center;gap:16px;padding:11px 0 11px 22px;position:relative;margin-left:-4px">
+                <span style="{{ a.dotStyle }}"></span>
+                <span style="font:400 12px/1 'IBM Plex Mono',monospace;color:rgba(233,236,217,.4);min-width:60px">{{ a.t }}</span>
+                <span style="font-size:16px;color:rgba(233,236,217,.82)">{{ a.text }}</span>
+              </div>
+            </sc-for>
+          </div>
+
+          <div style="text-align:right;margin-top:18px">
+            <button onClick="{{ resetDemo }}" style="cursor:pointer;background:none;border:none;font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:rgba(233,236,217,.45)" style-hover="color:#cfe9d2">↺ reset ledger</button>
+          </div>
+        </div>
+        </sc-if>
+  </div>
+  </sc-if>
+
+  <!-- ============ DOCTRINE ============ -->
+  <sc-if value="{{ isDoctrine }}" hint-placeholder-val="{{ false }}">
+  <div style="position:relative;z-index:3">
+    <section style="padding:150px clamp(20px,5vw,64px) 60px;max-width:900px;margin:0 auto">
+      <span style="font:500 12px/1 'IBM Plex Mono',monospace;letter-spacing:.3em;color:#7ba886;text-transform:uppercase">Doctrine</span>
+      <h1 style="font-family:'Cormorant Garamond',serif;font-weight:400;font-size:clamp(40px,7vw,82px);margin:18px 0 30px;letter-spacing:-.01em;line-height:1">A psychopomp<br>for capital.</h1>
+      <p style="font-size:20px;color:rgba(233,236,217,.74);max-width:640px;margin:0 0 16px">Hermes was the guide who led souls across the threshold — and the only god who could come back. We gave the name to an agent that ferries a business goal into the world of money and returns with a receipt for everything it touched.</p>
+      <p style="font-size:18px;color:rgba(233,236,217,.6);max-width:640px;margin:0">An agent that can spend is an agent that can be wrong, robbed, or hijacked. So this one is built to be governed first and clever second.</p>
+    </section>
+
+    <!-- tenets -->
+    <section style="padding:40px clamp(20px,5vw,64px) 80px;max-width:900px;margin:0 auto">
+      <div style="display:flex;flex-direction:column;gap:1px;background:rgba(207,233,210,.12);border:1px solid rgba(207,233,210,.12)">
+        <sc-for list="{{ tenets }}" as="t" hint-placeholder-count="4">
+          <div style="background:#0b1d14;padding:28px 30px;display:flex;gap:26px;align-items:baseline" style-hover="background:#0e2419">
+            <span style="font-family:'Cormorant Garamond',serif;font-size:38px;color:#7ba886;min-width:46px">{{ t.num }}</span>
+            <p style="margin:0;font-size:19px;color:#e9ecd9;line-height:1.5">{{ t.text }}</p>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+    <!-- how it runs -->
+    <section style="padding:20px clamp(20px,5vw,64px) 90px;max-width:900px;margin:0 auto">
+      <span style="font:500 12px/1 'IBM Plex Mono',monospace;letter-spacing:.3em;color:#7ba886;text-transform:uppercase">How it runs</span>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:30px;margin-top:30px">
+        <sc-for list="{{ runs }}" as="r" hint-placeholder-count="4">
+          <div>
+            <h3 style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:24px;color:#cfe9d2;margin:0 0 8px">{{ r.title }}</h3>
+            <p style="margin:0;font-size:16px;color:rgba(233,236,217,.64);line-height:1.55">{{ r.body }}</p>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+    <!-- closing image -->
+    <section style="position:relative;height:clamp(340px,46vw,500px);overflow:hidden;border-top:1px solid rgba(207,233,210,.12);display:flex;align-items:center;justify-content:center">
+      <div data-parallax data-depth="0.08" style="position:absolute;inset:-12% 0;z-index:0">
+        <img src="assets/limbs.jpg" alt="" style="width:100%;height:124%;object-fit:cover;opacity:.7">
+      </div>
+      <div style="position:absolute;inset:0;background:radial-gradient(60% 100% at 50% 50%, transparent, rgba(8,22,16,.6))"></div>
+      <p style="position:relative;z-index:2;font-family:'Cormorant Garamond',serif;font-weight:300;font-style:italic;font-size:clamp(24px,3.6vw,40px);color:#e9ecd9;text-align:center;max-width:680px;padding:0 24px;margin:0">“Scattered, it could be anything. Governed, it is a company.”</p>
+    </section>
+  </div>
+  </sc-if>
+
+  <!-- FOOTER -->
+  <footer style="position:relative;z-index:3;padding:40px clamp(20px,5vw,64px);border-top:1px solid rgba(207,233,210,.12);display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap">
+    <span style="font:400 12px/1.5 'IBM Plex Mono',monospace;letter-spacing:.1em;color:rgba(233,236,217,.42)">HERMES OPS·CFO — hackathon prototype · demo mode · stripe test only</span>
+    <span style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:17px;color:rgba(233,236,217,.5)">earn · spend · govern · audit</span>
+  </footer>
+
+  <!-- LOADER -->
+  <div ref="{{ setLoader }}" style="position:fixed;inset:0;z-index:200;background:radial-gradient(120% 100% at 50% 40%, #11281b, #081610 75%);display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity 1s ease;opacity:1">
+    <div style="position:absolute;inset:0;pointer-events:none;mix-blend-mode:soft-light;opacity:.2;background-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n2'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n2)'/%3E%3C/svg%3E&quot;);background-size:140px 140px;animation:grainshift 7s steps(9) infinite"></div>
+    <div style="position:relative;width:clamp(190px,30vw,300px);aspect-ratio:307/381;filter:drop-shadow(0 24px 50px rgba(0,0,0,.6))">
+      <div data-head-stack style="position:absolute;inset:0">
+        <img data-head-frame src="assets/head/frame01.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:1">
+        <img data-head-frame src="assets/head/frame02.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0">
+        <img data-head-frame src="assets/head/frame03.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0">
+        <img data-head-frame src="assets/head/frame04.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0">
+        <img data-head-frame src="assets/head/frame05.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0">
+        <img data-head-frame src="assets/head/frame06.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0">
+        <img data-head-frame src="assets/head/frame07.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0">
+        <img data-head-frame src="assets/head/frame08.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0">
+        <img data-head-frame src="assets/head/frame09.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0">
+        <img data-head-frame src="assets/head/frame10.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0">
+      </div>
+    </div>
+    <div style="margin-top:48px;display:flex;flex-direction:column;align-items:center;gap:18px;width:clamp(190px,30vw,300px)">
+      <div style="font-family:'Cormorant Garamond',serif;font-size:28px;letter-spacing:.3em;color:#cfe9d2">HERMES</div>
+      <div style="width:100%;height:1px;background:rgba(207,233,210,.18);position:relative;overflow:hidden">
+        <div ref="{{ setProgBar }}" style="position:absolute;inset:0;background:#cfe9d2;transform:scaleX(0);transform-origin:left"></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;width:100%;font:400 11px/1 'IBM Plex Mono',monospace;letter-spacing:.18em;color:rgba(233,236,217,.5);text-transform:uppercase">
+        <span>summoning the cfo</span>
+        <span><span ref="{{ setProgNum }}">000</span>%</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:&quot;100%&quot;,&quot;height&quot;:&quot;100%&quot;},&quot;loaderSpeed&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:230,&quot;min&quot;:90,&quot;max&quot;:280,&quot;step&quot;:10,&quot;unit&quot;:&quot;ms/frame&quot;,&quot;section&quot;:&quot;Loader&quot;},&quot;grainOpacity&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:0.11,&quot;min&quot;:0,&quot;max&quot;:0.45,&quot;step&quot;:0.01,&quot;section&quot;:&quot;Atmosphere&quot;},&quot;motion&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;section&quot;:&quot;Atmosphere&quot;}}">
+class Component extends DCLogic {
+  state = { route: 'home', approvedGpu: false, hasPlan: false, running: false, facReveal: false, storyReveal: false };
+
+  componentDidMount() {
+    document.body.style.overflow = 'hidden';
+    this.applyGrain();
+    this.startHeads();
+    this.runLoader();
+    this._onScroll = () => this.applyParallax();
+    this._onMove = (e) => this.applyDrift(e);
+    window.addEventListener('scroll', this._onScroll, { passive: true });
+    window.addEventListener('mousemove', this._onMove, { passive: true });
+  }
+  componentDidUpdate() { this.applyGrain(); }
+  componentWillUnmount() {
+    cancelAnimationFrame(this._raf);
+    clearTimeout(this._revealT);
+    window.removeEventListener('scroll', this._onScroll);
+    window.removeEventListener('mousemove', this._onMove);
+    document.body.style.overflow = '';
+  }
+
+  setRoot = (el) => { if (el) this.root = el; };
+  setLoader = (el) => { if (el) this.loader = el; };
+  setProgNum = (el) => { if (el) this.progNum = el; };
+  setProgBar = (el) => { if (el) this.progBar = el; };
+  setGrain = (el) => { if (el) this.grain = el; };
+
+  applyGrain() {
+    if (this.grain) this.grain.style.opacity = String(this.props.grainOpacity ?? 0.18);
+  }
+
+  startHeads() {
+    const dwell = () => this.props.loaderSpeed ?? 160;
+    const N = 10;
+    const gdwell = 220; // ghost field: slower stop-motion drift
+    const ddwell = 200; // floating dude
+    const t0 = performance.now();
+    const pingpong = (phase) => {
+      let idx = phase < N ? Math.floor(phase) : Math.floor(2 * N - 1 - phase);
+      if (idx < 0) idx = 0; if (idx > N - 1) idx = N - 1;
+      return idx;
+    };
+    const loop = (t) => {
+      const d = dwell();
+      const idx = pingpong(((t - t0) % (N * d * 2)) / d);
+      const heads = this.root ? this.root.querySelectorAll('[data-head-stack]') : [];
+      heads.forEach((s) => {
+        const imgs = s.querySelectorAll('[data-head-frame]');
+        imgs.forEach((im, i) => { im.style.opacity = i === idx ? '1' : '0'; });
+      });
+      const gidx = pingpong(((t - t0) % (N * gdwell * 2)) / gdwell);
+      const ghosts = this.root ? this.root.querySelectorAll('[data-ghost-stack]') : [];
+      ghosts.forEach((s) => {
+        const imgs = s.querySelectorAll('[data-ghost-frame]');
+        imgs.forEach((im, i) => { im.style.opacity = i === gidx ? '1' : '0'; });
+      });
+      const didx = pingpong(((t - t0) % (N * ddwell * 2)) / ddwell);
+      const dudes = this.root ? this.root.querySelectorAll('[data-dude-stack]') : [];
+      dudes.forEach((s) => {
+        const imgs = s.querySelectorAll('[data-dude-frame]');
+        imgs.forEach((im, i) => { im.style.opacity = i === didx ? '1' : '0'; });
+      });
+      this._raf = requestAnimationFrame(loop);
+    };
+    this._raf = requestAnimationFrame(loop);
+  }
+
+  runLoader() {
+    const dur = 2700;
+    const t0 = performance.now();
+    const tick = (t) => {
+      let p = Math.min(1, (t - t0) / dur);
+      const eased = p < 0.5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2;
+      const pct = Math.round(eased * 100);
+      if (this.progNum) this.progNum.textContent = String(pct).padStart(3, '0');
+      if (this.progBar) this.progBar.style.transform = 'scaleX(' + eased + ')';
+      if (p < 1) requestAnimationFrame(tick);
+      else this._revealT = setTimeout(() => this.reveal(), 420);
+    };
+    requestAnimationFrame(tick);
+  }
+
+  reveal() {
+    if (this.loader) {
+      this.loader.style.opacity = '0';
+      this.loader.style.pointerEvents = 'none';
+      setTimeout(() => { if (this.loader) this.loader.style.display = 'none'; }, 1100);
+    }
+    document.body.style.overflow = '';
+  }
+
+  applyParallax() {
+    if (!this.root || this.props.motion === false) return;
+    const y = window.scrollY || window.pageYOffset || 0;
+    this.root.querySelectorAll('[data-parallax]').forEach((el) => {
+      const d = parseFloat(el.getAttribute('data-depth') || '0.1');
+      el.style.transform = 'translate3d(0,' + (y * d).toFixed(1) + 'px,0)';
+    });
+  }
+
+  applyDrift(e) {
+    if (!this.root || this.props.motion === false) return;
+    const cx = e.clientX / window.innerWidth - 0.5;
+    const cy = e.clientY / window.innerHeight - 0.5;
+    this.root.querySelectorAll('[data-drift]').forEach((el) => {
+      const d = parseFloat(el.getAttribute('data-drift') || '10');
+      el.style.transform = 'translate3d(' + (cx * d).toFixed(1) + 'px,' + (cy * d * 0.7).toFixed(1) + 'px,0)';
+    });
+  }
+
+  go = (r) => { this.setState({ route: r }); window.scrollTo(0, 0); };
+  goHome = () => this.go('home');
+  goLedger = () => this.go('ledger');
+  goDoctrine = () => this.go('doctrine');
+
+  runDemo = () => {
+    this.setState({ running: true });
+    setTimeout(() => this.setState({ hasPlan: true, running: false }), 950);
+  };
+  approveGpu = () => this.setState({ approvedGpu: true });
+  resetDemo = () => this.setState({ hasPlan: false, approvedGpu: false, running: false });
+  revealFac = () => this.setState({ facReveal: true });
+  revealStory = () => this.setState({ storyReveal: true });
+
+  buildItems() {
+    const ag = this.state.approvedGpu;
+    const raw = [
+      { name: 'Brand kit / logo SaaS', amt: 12, cat: 'marketing', reason: 'Visual identity for the offer page and the demo thumbnail.', status: 'AUTO' },
+      { name: 'Email outreach tool', amt: 30, cat: 'sales', reason: 'Reach the first customer leads without manual spreadsheet work.', status: 'AUTO' },
+      { name: 'GPU inference credits', amt: 200, cat: 'delivery', reason: 'Burst compute for repo triage and report generation.', status: ag ? 'HUMAN' : 'BLOCKED' },
+    ];
+    const meta = {
+      AUTO: { label: 'Auto-approved', color: '#7ba886', bg: 'rgba(123,168,134,.12)', bd: 'rgba(123,168,134,.4)' },
+      HUMAN: { label: 'Human approved', color: '#cfe9d2', bg: 'rgba(207,233,210,.12)', bd: 'rgba(207,233,210,.45)' },
+      BLOCKED: { label: 'Held at the gate', color: '#d9b483', bg: 'rgba(217,180,131,.12)', bd: 'rgba(217,180,131,.45)' },
+    };
+    return raw.map((it, idx) => {
+      const m = meta[it.status];
+      return {
+        key: 'i' + idx,
+        name: it.name, amtStr: '$' + it.amt, cat: it.cat, reason: it.reason,
+        statusLabel: m.label,
+        badgeStyle: { color: m.color, background: m.bg, border: '1px solid ' + m.bd, padding: '5px 11px', borderRadius: '2px', fontFamily: "'IBM Plex Mono', monospace", fontSize: '10.5px', fontWeight: 500, letterSpacing: '.08em', textTransform: 'uppercase', whiteSpace: 'nowrap' },
+        dotStyle: { width: '8px', height: '8px', borderRadius: '50%', background: m.color, flex: 'none', boxShadow: '0 0 10px ' + m.color },
+        showApprove: it.status === 'BLOCKED',
+        onApprove: this.approveGpu,
+      };
+    });
+  }
+
+  buildAudit() {
+    const ag = this.state.approvedGpu;
+    const a = [
+      { t: '19:36:14', text: 'Created $499 customer payment link', kind: 'revenue' },
+      { t: '19:36:14', text: 'Approved Brand kit / logo SaaS for $12', kind: 'auto' },
+      { t: '19:36:14', text: 'Approved Email outreach tool for $30', kind: 'auto' },
+      { t: '19:36:14', text: 'Blocked GPU inference credits — above $50 cap', kind: 'gate' },
+    ];
+    if (ag) a.push({ t: '19:38:02', text: 'Human approved GPU inference credits for $200', kind: 'human' });
+    const col = { revenue: '#cfe9d2', auto: '#7ba886', gate: '#d9b483', human: '#cfe9d2' };
+    return a.map((e, i) => ({
+      key: 'a' + i, t: e.t, text: e.text,
+      dotStyle: { width: '9px', height: '9px', borderRadius: '50%', background: col[e.kind], boxShadow: '0 0 9px ' + col[e.kind], flex: 'none', position: 'absolute', left: '-4.5px' },
+    }));
+  }
+
+  renderVals() {
+    const route = this.state.route;
+    const ag = this.state.approvedGpu;
+    const approved = ag ? 242 : 42;
+    const blocked = ag ? 0 : 200;
+    const margin = 499 - approved;
+    const gross = Math.round((margin / 499) * 1000) / 10;
+    const remaining = 250 - approved;
+
+    const mk = (label, r) => ({
+      key: r, label, onClick: () => this.go(r),
+      style: {
+        background: 'none', border: 'none', cursor: 'pointer', padding: '0',
+        fontFamily: "'EB Garamond', serif", fontSize: '17px', letterSpacing: '.01em',
+        color: route === r ? '#cfe9d2' : 'rgba(233,236,217,.55)',
+        borderBottom: route === r ? '1px solid #cfe9d2' : '1px solid transparent',
+        paddingBottom: '3px',
+      },
+    });
+
+    return {
+      setRoot: this.setRoot, setLoader: this.setLoader, setProgNum: this.setProgNum, setProgBar: this.setProgBar, setGrain: this.setGrain,
+      goHome: this.goHome, goLedger: this.goLedger, goDoctrine: this.goDoctrine,
+      isHome: route === 'home', isLedger: route === 'ledger', isDoctrine: route === 'doctrine',
+      navItems: [mk('Premise', 'home'), mk('The Ledger', 'ledger'), mk('Doctrine', 'doctrine')],
+
+      faculties: [
+        { key: 'f1', num: '01 — earn', title: 'Earn', body: 'Drafts the offer and mints a $499 Stripe payment link for an AI Security Review — revenue before a line of work is done.' },
+        { key: 'f2', num: '02 — spend', title: 'Spend', body: 'Plans its own vendor spend — brand kit, outreach, compute — and creates real test-mode links for what it clears.' },
+        { key: 'f3', num: '03 — govern', title: 'Govern', body: 'Refuses spend above the auto-approval cap and never lets an approval breach the budget. Risk before cleverness.' },
+        { key: 'f4', num: '04 — audit', title: 'Audit', body: 'Writes every revenue, spend, and refusal to ledger.json — a complete trail of why each decision was made.' },
+      ],
+      heroStats: [
+        { key: 's1', value: '$499', label: 'Revenue link minted', color: '#cfe9d2' },
+        { key: 's2', value: '$42', label: 'Spend auto-cleared', color: '#7ba886' },
+        { key: 's3', value: '$200', label: 'Held for approval', color: '#d9b483' },
+        { key: 's4', value: '$457', label: 'Projected margin', color: '#e9ecd9' },
+      ],
+
+      showRunBtn: !this.state.hasPlan,
+      running: this.state.running,
+      gpuBlocked: !this.state.approvedGpu,
+      hasPlan: this.state.hasPlan,
+      runLabel: this.state.running ? 'Forging…' : 'Forge ops plan',
+      runHint: this.state.running ? 'planning · pricing · gating spend' : 'runs in demo mode — nothing is charged',
+      items: this.buildItems(),
+      audit: this.buildAudit(),
+      econ: [
+        { key: 'e1', value: '$499', label: 'Revenue potential', color: '#cfe9d2' },
+        { key: 'e2', value: '$' + approved, label: 'Approved spend', color: '#7ba886' },
+        { key: 'e3', value: '$' + margin, label: 'Projected margin', color: '#e9ecd9' },
+        { key: 'e4', value: gross + '%', label: 'Gross margin', color: '#e9ecd9' },
+        { key: 'e5', value: '$' + (blocked || remaining), label: blocked ? 'Pending approval' : 'Budget remaining', color: blocked ? '#d9b483' : 'rgba(233,236,217,.7)' },
+      ],
+
+      tenets: [
+        { key: 't1', num: 'i', text: 'Live Stripe keys are refused outright. The agent operates in demo or test mode only — it cannot move real money.' },
+        { key: 't2', num: 'ii', text: 'No spend above the auto-approval cap clears without a human. It waits at the gate, named and dated.' },
+        { key: 't3', num: 'iii', text: 'No approval — human or otherwise — may ever exceed the budget. The cap is the cap.' },
+        { key: 't4', num: 'iv', text: 'Every revenue, spend, and refusal is written to the ledger. Nothing the agent decides is invisible.' },
+      ],
+      runs: [
+        { key: 'r1', title: 'Local & lean', body: 'A Hermes-style CFO agent running on Python’s standard library. One command, any laptop.' },
+        { key: 'r2', title: 'Stripe test mode', body: 'Set a test key and it creates real Stripe test Product, Price, and Payment Link objects. Live keys are rejected.' },
+        { key: 'r3', title: 'Deterministic demo', body: 'No secret required — stable demo links make the 60-second walkthrough reliable every time.' },
+        { key: 'r4', title: 'The ledger', body: 'State and audit trail persist to ledger.json — the single source of truth for what happened and why.' },
+      ],
+
+      runDemo: this.runDemo, resetDemo: this.resetDemo,
+      facReveal: this.state.facReveal,
+      showClickMe: !this.state.facReveal,
+      cardsFilter: this.state.facReveal ? 'none' : 'blur(7px)',
+      cardsOpacity: this.state.facReveal ? '1' : '0.4',
+      dudeOpacity: this.state.facReveal ? '1' : '0',
+      revealFac: this.revealFac,
+      storyReveal: this.state.storyReveal,
+      showStoryBtn: !this.state.storyReveal,
+      revealStory: this.revealStory,
+    };
+  }
+}
+</script>
+</body>
+</html>

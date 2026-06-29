@@ -1,0 +1,112 @@
+{
+  "app": "Hermes Ops CFO",
+  "audit_trail": [
+    {
+      "at": "2026-06-29T19:36:14+00:00",
+      "summary": "Created $499 customer payment link",
+      "type": "revenue_link_created",
+      "url": "https://stripe.test/pay/ai-security-review-499"
+    },
+    {
+      "at": "2026-06-29T19:36:14+00:00",
+      "summary": "Approved Brand kit / logo SaaS for $12",
+      "type": "spend_auto_approved",
+      "url": "https://stripe.test/pay/vendor-spend-brand-kit-logo-saas-12"
+    },
+    {
+      "at": "2026-06-29T19:36:14+00:00",
+      "summary": "Approved Email outreach tool for $30",
+      "type": "spend_auto_approved",
+      "url": "https://stripe.test/pay/vendor-spend-email-outreach-tool-30"
+    },
+    {
+      "at": "2026-06-29T19:36:14+00:00",
+      "summary": "Blocked GPU inference credits pending human approval",
+      "type": "approval_gate"
+    }
+  ],
+  "auto_approve_cap_usd": 50,
+  "budget_usd": 250,
+  "created_at": "2026-06-29T19:36:14+00:00",
+  "goal": "Launch paid AI security review service",
+  "next_action": "Record 1-3 minute demo and submit to Nous Discord + Typeform",
+  "ops": [
+    {
+      "status": "DONE",
+      "task": "Draft landing page promise and $499 offer"
+    },
+    {
+      "status": "DONE",
+      "task": "Create Stripe customer payment link"
+    },
+    {
+      "status": "DONE",
+      "task": "Prepare customer intake checklist"
+    },
+    {
+      "status": "DONE",
+      "task": "Gate vendor spend by budget and approval threshold"
+    },
+    {
+      "status": "READY",
+      "task": "Record 1-3 minute hackathon demo"
+    }
+  ],
+  "revenue": {
+    "amount_usd": 499,
+    "mode": "demo",
+    "payment_link": "https://stripe.test/pay/ai-security-review-499",
+    "payment_link_id": "plink_demo_ai-security-review_499",
+    "product": "AI Security Review"
+  },
+  "risk_controls": [
+    "Live Stripe keys refused; demo/test mode only",
+    "No spend above auto-approval cap without human approval",
+    "No approval can exceed budget cap",
+    "Every revenue/spend decision is written to ledger.json"
+  ],
+  "spend": {
+    "approved_total_usd": 42,
+    "blocked_total_usd": 200,
+    "items": [
+      {
+        "amount_usd": 12,
+        "attacker_no_business_noise": "Revenue-enabling spend",
+        "category": "marketing",
+        "decision": "Within budget and auto-approval cap",
+        "name": "Brand kit / logo SaaS",
+        "payment_link": "https://stripe.test/pay/vendor-spend-brand-kit-logo-saas-12",
+        "reason": "Fast visual identity for the offer page and demo thumbnail",
+        "status": "APPROVED_AUTO"
+      },
+      {
+        "amount_usd": 30,
+        "attacker_no_business_noise": "Customer acquisition spend",
+        "category": "sales",
+        "decision": "Within budget and auto-approval cap",
+        "name": "Email outreach tool",
+        "payment_link": "https://stripe.test/pay/vendor-spend-email-outreach-tool-30",
+        "reason": "Reach first customer leads without manual spreadsheet work",
+        "status": "APPROVED_AUTO"
+      },
+      {
+        "amount_usd": 200,
+        "attacker_no_business_noise": "Delivery capacity spend; large enough to require approval",
+        "category": "delivery",
+        "decision": "Above auto-approval cap ($50)",
+        "name": "GPU inference credits",
+        "payment_link": null,
+        "reason": "Burst compute for repo triage and report generation",
+        "status": "BLOCKED_APPROVAL_REQUIRED"
+      }
+    ],
+    "remaining_budget_usd": 208
+  },
+  "unit_economics": {
+    "approved_spend_usd": 42,
+    "blocked_spend_pending_approval_usd": 200,
+    "gross_margin_percent": 91.58,
+    "projected_margin_usd": 457,
+    "revenue_potential_usd": 499
+  }
+}
