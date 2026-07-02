@@ -1,0 +1,6 @@
+.git
+.vercel
+DEPLOY_SUMMARY.json
+*_with_token.py
+alias_and_redeploy_with_token.py
+*.log
